@@ -23,7 +23,7 @@ if($_SERVER["REQUEST_METHOD"]==="POST"){
     $all=$count."<>".$name."<>".$coment."<>".$time."<>".$pass."<>";
      fwrite($fp,$all."\r\n");
      fclose($fp);
-     //print $all;//☆確認→結果：パスワード付きで保存されていることを確認
+     //(検証)print $all;//☆確認→結果：パスワード付きで保存されていることを確認
   }
 //------------------------------------------------------
 //削除フォーム
@@ -31,12 +31,11 @@ if($_SERVER["REQUEST_METHOD"]==="POST"){
   else if(!empty($_POST["delete"])&&!empty($_POST["del_pass"])){
     $delete=$_POST["delete"];
     $del_pass=$_POST["del_pass"];
-     //(検証)
-    //echo $del_pass;//☆結果→入力したパスワード表示された。
+     //(検証)echo $del_pass;//☆結果→入力したパスワード表示された。
+
 
      $file=file('kadai2-6.txt');//主テキストを読み込む
      $a=fopen('kadai2-6.txt',"w");
-     //↑・・fopen・fwriteの操作が上手くいっておらず、削除番号を送るとすべて消えてしまうため、いったんコメントアウト。
 
      //読み込んだテキスト内に格納されている要素（行＄line）を読み込み｛｝内の処理を行う。
      foreach($file as $line){
@@ -54,10 +53,10 @@ if($_SERVER["REQUEST_METHOD"]==="POST"){
          //（検証）
          //echo $delData[4];//☆結果→「five」と表示される
          //echo $del_pass;//☆結果→「five」と表示される
-           //echo "|".$delData[4]."|".$del_pass."|";//☆結果→「|pass |pass|」と表示された。delData[4]の後ろに半角スペースがあるようだ。なぜ？
-           //echo "|".$delData[0]."|".$delete."|";//☆結果→「|5|5|」半角スペースは入ってなかった。
-           //↑考察：問題は、delData[4]の半角スペース？
-           //☆☆解決☆☆　入力フォームで格納するときに、$passの後ろにも"<>"を入れたところ解決。
+         //echo "|".$delData[4]."|".$del_pass."|";//☆結果→「|pass |pass|」と表示された。delData[4]の後ろに半角スペースがあるようだ。なぜか。
+         //echo "|".$delData[0]."|".$delete."|";//☆結果→「|5|5|」半角スペースは入ってなかった。
+         //↑考察：問題は、delData[4]の半角スペース？
+         //☆☆解決☆☆　入力フォームで格納するときに、$passの後ろにも"<>"を入れたところ解決。
 
 
     //if2：「$delData[4]・送信された番号の行の5番目に格納してあるpassデータ」と「$del_pass・削除フォーム下のパス欄から送信されたpassデータ」が等しい時、以下の動作をする。
@@ -68,7 +67,7 @@ if($_SERVER["REQUEST_METHOD"]==="POST"){
 
           $delete_passErr="パスワードが一致しません";
 
-            fwrite($a,$line."\r\n");//☆削除したい番号の$lineを開いた主テキストへ上書保存する。→結果：テキストファイル内のすべてのデータが消えてしまった。
+            fwrite($a,$line."\r\n");//全て再度上書き保存する。
           
           }//△if2閉じ
           
@@ -77,11 +76,8 @@ if($_SERVER["REQUEST_METHOD"]==="POST"){
   //else１:送信された番号以外の行について、再度上書き保存する。
        else {//○else１
 
-            //(検証)
-            //echo "c";//☆結果→cが該当番号以外の行数分、表示された。foreach内だから。
-            //$all_delete=$delData[0]."<>".$delData[1]."<>".$delData[2]."<>".$delData[3]."<>".$delData[4]."<>";
-            fwrite($a,$line."\r\n");//☆削除したい番号の$lineを開いた主テキストへ上書保存する。→結果：テキストファイル内のすべてのデータが消えてしまった。
-             //↑・・fopen・fwriteの操作が上手くいっておらず、削除番号を送るとすべて消えてしまうため、いったんコメントアウト。
+            fwrite($a,$line."\r\n");
+           
 
         }//○else１閉じ
 
@@ -102,32 +98,38 @@ if($_SERVER["REQUEST_METHOD"]==="POST"){
    $edit_pass=$_POST["edit_pass"];
 
   $file=file('kadai2-6.txt');
-    foreach($file as $line){
+    foreach($file as $line){//○foreach
 
       $editData=explode("<>",$line);
 
    //if①編集テキストに送信された番号と一致した時
-    if($editData[0]==$edit){
-       if($editData[4]==$edit_pass){
-      //該当する番号の「名前」「コメント」をテキストボックスへ送る
+    if($editData[0]==$edit){//☆if①
+
+   //if②パスワードも一致した時
+       if($editData[4]==$edit_pass){//△if②
+      //該当する番号（編集する番号）の「名前」「コメント」をテキストボックスへ送る
        $name_edit=$editData[1];
        $coment_edit=$editData[2];
-        }
+        }//△if②
+
        else{
          $edit_passErr="パスワードが一致しません。";
           }
           
      }//☆if①
 
-    }
-      //hiddenへ値を送る☆hidden→textへ変えることで、”編集中だよ”及び”編集中”へ値が入っていることを確認なう。
+    }//○foreach終了
+
+      //hiddenへ値を送る☆理由→１,入力なのか編集なのかを分けるため　2,編集フォームから送られた番号を記録するため
        $edit_hidden=$edit;
-       //echo $edit_hidden;
+
+         //（検証）☆hidden→textへ変えることで、任意の値が入っていることを確認した。
+
 }//編集自体の動作閉じ→→→編集終了。
 
 
 //---------------------------------------------------------------------
-//編集作業２
+//編集フォーム２☆入力フォームから編集したものを送る
 //--------------------------------------------------------------------
 //置き換えるプログラム
    else if(!empty($_POST["name"])&&!empty($_POST["coment"])&&!empty($_POST["edit_hidden"])){
@@ -137,7 +139,7 @@ if($_SERVER["REQUEST_METHOD"]==="POST"){
          foreach($file as $line){
           $editData2=explode("<>",$line);
 
-   //if②-2　変数edit（投稿された編集番号）と一致した番号の配列一行に以下の動作を行う。
+   //変数edit（投稿された編集番号）と一致した番号の配列一行に以下の動作を行う。
           if($editData2[0]==$edit_hidden){
         //編集前からの番号・新たに送信された（編集された）名前・新たに送信された（編集された）コメント・元の投稿時間をテキストへ上書する。
             $edit_data=$editData2[0]."<>".$_POST["name"]."<>".$_POST["coment"]."<>".$editData2[3]."<>".$editData2[4]."<>";
@@ -155,24 +157,13 @@ if($_SERVER["REQUEST_METHOD"]==="POST"){
      $edit_hidden="";
    }//置き換えるプログラム閉じ
 
-
-//------------------------------------------------------------
-//入力フォームエラー
-//------------------------------------------------------------
-
- else{
-     $name=$_POST["name"];
-     $coment=$_POST["coment"];
-     $pass=$_POST["pass"];
-     $err="投稿内容が不十分です。";
-    }
 }
 ?>
 
 
 <?php
 //====================================================================================================================
-//ブラウザ画面
+//ブラウザ画面　※※作業用画面になっている。見やすくはない。
 //=====================================================================================================================
 ?>
 <!DOCTYPE html>
@@ -225,7 +216,7 @@ $file=file('kadai2-6.txt');
   foreach($file as $line){
    $data=explode("<>",$line);
    echo"<p>";
-   echo $data[0]." ".$data[1]." ".$data[2]." ".$data[3]." ".$data[4];
+   echo $data[0]." ".$data[1]." ".$data[2]." ".$data[3]." ".$data[4];//☆作業のためパスワードも表示
    echo "</p>";
    
   }
