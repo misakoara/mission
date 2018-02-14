@@ -87,8 +87,8 @@ if(header('Content-Type: image/png')){
 $sql="INSERT INTO upData(id,name,comment,content,day)VALUES('','$name','$comment','$fname','$time')";
 $result=$pdo->query($sql);
         //readfile($fname);
-}*/==========================================================================
-
+==========================================================================
+*/
 
 }//☆データ挿入if閉じ
 
@@ -139,9 +139,9 @@ catch(PDOException $e){
 //
 //データベースの情報
 //
-$dsn='mysql:dbname=co_729_it_3919_com;host=localhost';
-$user='co-729.it.3919.c';
-$password='CR67VUe';
+$dsn='データベース名';
+$user='ユーザー名';
+$password='パスワード';
 
 try{
 //
