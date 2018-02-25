@@ -9,14 +9,18 @@
 <head>
  <meta charset="UTF-8">
  <meta name="robots" content="noindex, nofollow"/>
+ <link rel="stylesheet" href="stylesheet3-7.css">
+ <title>3-7課題</title>
 </head>
 <body>
 
         <form action="" method="post">
-         ログイン画面
-         <p>ID:<input type="text" name="log_id" ></p>
-         <p>パスワード:<input type="password" name="log_pass"></p>
-         <p><input type="submit" value="ログイン"></p>
+         <h1>ログイン画面</h1>
+         <h3>ID</h3>
+         <input class="id" type="text" name="log_id" >
+         <h3>パスワード</h3>
+         <input class="pass" type="password" name="log_pass">
+         <p><input class="submit" type="submit" value="ログイン"></p>
         </form>
 
 

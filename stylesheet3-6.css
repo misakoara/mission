@@ -1,0 +1,32 @@
+/*==================V‹K“o˜^==========================*/
+
+/*---‘S‘Ì---*/
+form{
+margin: 20px;
+}
+
+/*---V‹K“o˜^---*/
+h1{
+padding: 0.2em 1em;
+background: #d6ebff;
+border: dashed 2px white;
+border-radius: 8px;
+display: inline-block;
+}
+
+/*---–¼‘O---*/
+input.name{
+height: 20px;
+}
+
+/*---ƒpƒXƒ[ƒh---*/
+input.pass{
+height: 20px;
+}
+
+/*---“o˜^ƒ{ƒ^ƒ“---*/
+input.submit{
+width:60px;
+height:30px;
+}
+

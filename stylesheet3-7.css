@@ -1,0 +1,32 @@
+/*==================ログイン画面==========================*/
+
+/*---全体---*/
+form{
+margin: 20px;
+}
+
+/*---ログイン画面---*/
+h1{
+padding: 0.2em 1em;
+background: #8FBC8F;
+border: dashed 2px #2E8B57;
+border-radius: 8px;
+display: inline-block;
+}
+
+/*---ID---*/
+input.id{
+height: 20px;
+}
+
+/*---パスワード---*/
+input.pass{
+height: 20px;
+}
+
+/*---ログインボタン---*/
+input.submit{
+width:80px;
+height:30px;
+}
+
