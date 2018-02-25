@@ -71,7 +71,8 @@ catch(PDOException $e){
          <p></p>
          <p><input type="submit" value="登録"></p>
          <p><?php echo $welcome;?></p>
-         <p><?php echo $form;?></p>
+         <p><?php echo htmlspecialchars($form);?></p>
+         <a href="http://co-729.it.99sv-coco.com/mission_3-7.php">ログイン画面へ</a> 
         </form>
 
 
