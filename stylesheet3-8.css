@@ -1,11 +1,9 @@
-/*====================入力フォーム==========================*/
 
-/*---全体---*/
 .form{
 margin: 20px;
 }
 
-/*---簡易掲示板---*/
+
 h1{
 padding: 0.2em 1em;
 color: #565656;
@@ -15,24 +13,24 @@ border-radius: 8px;
 display: inline-block;
 }
 
-/*---名前フォーム---*/
+
 input.name{
 height: 20px;
 }
 
-/*---コメントフォーム---*/
+
 textarea.comment{
 width: 250px;
 height: 100px;
 }
 
-/*---投稿ボタン---*/
+
 input.submit{
 width:60px;
 height:30px;
 }
 
-/*---底面---*/
+
 hr.style-board {
     border-style: double;
 
@@ -41,32 +39,29 @@ hr.style-board {
 
 
 
-/*====================投稿画面の編集========================*/
-
-/*---全体---*/
 .board{
 margin: 20px;
 }
 
-/*---ID--- */
+
 span.id{
 font-size:15px
 }
 
-/*---名前--- */
+
 span.name{
 color:#669933;
 font-size:15px
 }
 
-/*---投稿時間--- */
+
 span.day{
 font-size:10px;
 padding-left:15px;
 
 }
 
-/*---コメント---*/
+
 .comment_board{
 padding-left:15px;
 font-size:20px
