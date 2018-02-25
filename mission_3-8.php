@@ -22,7 +22,7 @@ if($_SERVER["REQUEST_METHOD"]==="POST"){
 //=====================================================
 //                  入力フォーム
 //=====================================================
-  if(!empty($_POST["name"])&&!empty($_POST["comment"])){
+  if(!empty($_POST["name"])&&!empty($_POST["comment"])){//☆データ挿入if☆
     $name=$_POST["name"];
     $comment=$_POST["comment"];
     $time =date("Y-m-d H:i:s");
@@ -31,11 +31,34 @@ if($_SERVER["REQUEST_METHOD"]==="POST"){
 //-----------------------------
 //データ挿入
 //-----------------------------
-$sql="INSERT INTO easy_board(id,name,comment,day)VALUES('','$name','$comment','$time')";
-$result=$pdo->query($sql);
+      if(empty($_FILES['fname']['name'])){
+         $sql="INSERT INTO easy_board(id,name,comment,day)VALUES('','$name','$comment','$time')";
+         $result=$pdo->query($sql);
+       }
 
+//※※※アップロード機能未完成です。※※※
+      elseif(!empty($_FILES['fname']['name'])){//☆elseif
+         echo $_FILES['fname']['name']."<br>";
+         echo $_FILES['fname']['type']."<br>";
+         echo $_FILES['fname']['tmp_name']."<br>";
+         echo $_FILES['fname']['error']."<br>";
+         echo $_FILES['fname']['size']."<br>";
 
-}//☆データ挿入if閉じ
+//分岐のための変数（mimeタイプ）
+      $fname_mime=$_FILES['fname'];
+      echo $fname_mime['extension'];
+
+//---mimeタイプによる分岐①画像---
+          if($fname_mime['extension']='jpg'){
+           }
+
+//---mimeタイプによる分岐②動画---
+         elseif($fname_mime['extension']='mp4'){
+           }
+
+      }//☆elseif閉じ
+
+      }//☆データ挿入if閉じ☆
 
 }//☆POST閉じ
 }//☆データベース接続try閉じ
@@ -69,6 +92,8 @@ catch(PDOException $e){
          <p><input type="text" name="name" class="name" value=<?php echo htmlspecialchars($_SESSION['name']);?>></p>
          <h3>コメント</h3>
          <p><textarea name="comment" class="comment"></textarea></p>
+         <h3>アップロード</h3>
+         <p><input type="file" name="fname"></p><br>
          <p><input class="submit" type="submit" value="投稿"></p>
         </form>
   </div>
@@ -131,7 +156,8 @@ foreach($result as $row){
 echo '<span class="id">'.$row['id'].'</span>';
 echo ':'.'<span class="name">'.htmlspecialchars($row['name']).'</span>';
 echo '<span class="day">'.$row['day'].'</span>';
-echo '<div class="comment_board">'.htmlspecialchars($row['comment']).'</div>'.'<hr>';
+echo '<div class="comment_board">'.htmlspecialchars($row['comment']).'</div>';
+echo $row['content'].'<hr>';
 }//foreach閉じ
 
 
@@ -197,43 +223,3 @@ else{
 </html>
 
 
-
-<?php
-//メモ
-//<h3>アップロード</h3>
-//<p><input type="file" name="fname"></p>
-//echo $row['content'].'<hr>'
-/*if(empty($_FILES['fname']['name'])){
-
-//(検証)echo "a";→表示された
-
-
-}
-
-※※※アップロード未完成なため、コメントアウトします。※※※
-elseif(!empty($_FILES['fname']['name'])){
-echo "b"."<br>";
-echo $_FILES['fname']['name']."<br>";
-echo $_FILES['fname']['type']."<br>";
-echo $_FILES['fname']['tmp_name']."<br>";
-echo $_FILES['fname']['error']."<br>";
-echo $_FILES['fname']['size']."<br>";
-
-//分岐のための変数（mimeタイプ）
-$fname_mime=$_FILES['fname'];
-echo $fname_mime['extension'];
-
-//---mimeタイプによる分岐①画像---
- if($fname_mime['extension']='jpg'){
-
-
-}
-
-//---mimeタイプによる分岐②動画---
- elseif($fname_mime['extension']='mp4'){
-
-  }
-
-}//☆elseif閉じ
-*/
-?>
